@@ -32,7 +32,7 @@ class QuickSettingTileService : TileService() {
             Tile.STATE_INACTIVE
         }
 
-        subtitle = if (isEnabled) {
+        label = if (isEnabled) {
             getString(R.string.disable)
         } else {
             getString(R.string.enable)
