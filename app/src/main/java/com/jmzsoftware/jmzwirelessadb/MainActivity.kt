@@ -25,8 +25,8 @@ import android.content.Context
 import android.net.wifi.WifiManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import eu.chainfire.libsuperuser.Shell
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.button
+import kotlinx.android.synthetic.main.activity_main.textView
 
 class MainActivity : AppCompatActivity() {
     private val ip: String
@@ -41,16 +41,24 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        updateState()
         button.setOnClickListener {
             if (button.text == resources.getString(R.string.disable)) {
                 ShellCommands.disableAdb()
-                textView.text = ""
-                button.text = resources.getString(R.string.enable)
             } else {
                 ShellCommands.enableAdb()
-                textView.text = resources.getString(R.string.noti, ip)
-                button.text = resources.getString(R.string.disable)
             }
+            updateState()
+        }
+    }
+
+    private fun updateState() {
+        if (ShellCommands.isAdbTcpEnabled()) {
+            textView.text = resources.getString(R.string.noti, ip)
+            button.text = resources.getString(R.string.disable)
+        } else {
+            textView.text = ""
+            button.text = resources.getString(R.string.enable)
         }
     }
 }
