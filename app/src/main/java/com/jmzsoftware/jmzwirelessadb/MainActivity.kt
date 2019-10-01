@@ -29,10 +29,11 @@ import kotlinx.android.synthetic.main.activity_main.button
 import kotlinx.android.synthetic.main.activity_main.textView
 
 class MainActivity : AppCompatActivity() {
+    private val wifiManager by lazy { applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager }
+
     private val ip: String
         get() {
-            val mWifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-            val ip = mWifiManager.connectionInfo.ipAddress
+            val ip = wifiManager.connectionInfo.ipAddress
             return ((ip and 0xFF).toString() + "." + (ip shr 8 and 0xFF) + "." + (ip shr 16 and 0xFF) + "."
                     + (ip shr 24 and 0xFF))
 
