@@ -1,6 +1,5 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
 android {
@@ -13,6 +12,7 @@ android {
         versionCode 3
         versionName "3.0"
     }
+    viewBinding.enabled = true
     if (keystorePropertiesFile.exists()) {
         println "Found signature properties file. Build will be signed."
         def keystoreProperties = new Properties()

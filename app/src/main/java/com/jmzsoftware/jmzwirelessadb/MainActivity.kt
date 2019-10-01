@@ -25,11 +25,11 @@ import android.content.Context
 import android.net.wifi.WifiManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.button
-import kotlinx.android.synthetic.main.activity_main.textView
+import com.jmzsoftware.jmzwirelessadb.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private val wifiManager by lazy { applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager }
+    private lateinit var binding: ActivityMainBinding
 
     private val ip: String
         get() {
@@ -41,10 +41,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         updateState()
-        button.setOnClickListener {
-            if (button.text == resources.getString(R.string.disable)) {
+        binding.button.setOnClickListener {
+            if (binding.button.text == resources.getString(R.string.disable)) {
                 ShellCommands.disableAdb()
             } else {
                 ShellCommands.enableAdb()
@@ -55,11 +55,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateState() {
         if (ShellCommands.isAdbTcpEnabled()) {
-            textView.text = resources.getString(R.string.noti, ip)
-            button.text = resources.getString(R.string.disable)
+            binding.textView.text = resources.getString(R.string.noti, ip)
+            binding.button.text = resources.getString(R.string.disable)
         } else {
-            textView.text = ""
-            button.text = resources.getString(R.string.enable)
+            binding.textView.text = ""
+            binding.button.text = resources.getString(R.string.enable)
         }
     }
 }
