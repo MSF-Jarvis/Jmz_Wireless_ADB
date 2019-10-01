@@ -43,30 +43,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         button.setOnClickListener {
             if (button.text == resources.getString(R.string.disable)) {
-                disableAdb()
+                ShellCommands.disableAdb()
                 textView.text = ""
                 button.text = resources.getString(R.string.enable)
             } else {
-                enableAdb()
+                ShellCommands.enableAdb()
                 textView.text = resources.getString(R.string.noti, ip)
                 button.text = resources.getString(R.string.disable)
             }
         }
-    }
-
-    private fun enableAdb() {
-        runCommands(arrayOf("setprop service.adb.tcp.port 5555", "stop adbd", "start adbd"))
-    }
-
-    private fun disableAdb() {
-        runCommands(arrayOf("setprop service.adb.tcp.port 0", "stop adbd"))
-    }
-
-    private fun runCommands(cmds: Array<String>) {
-        try {
-            Shell.Pool.SU.run(cmds)
-        } catch (ignored: Shell.ShellDiedException) {
-        }
-
     }
 }
