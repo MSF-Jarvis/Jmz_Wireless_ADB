@@ -6,3 +6,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - run: ./gradlew assembleDebug
+    - uses: actions/upload-artifact@master
+      with:
+        name: Debug APK
+        path: app/build/outputs/apk/debug/app-debug.apk
