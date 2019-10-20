@@ -28,16 +28,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.jmzsoftware.jmzwirelessadb.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private val wifiManager by lazy { applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager }
     private lateinit var binding: ActivityMainBinding
-
-    private val ip: String
-        get() {
-            val ip = wifiManager.connectionInfo.ipAddress
-            return ((ip and 0xFF).toString() + "." + (ip shr 8 and 0xFF) + "." + (ip shr 16 and 0xFF) + "."
-                    + (ip shr 24 and 0xFF))
-
-        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateState() {
         if (ShellCommands.isAdbTcpEnabled()) {
-            binding.textView.text = resources.getString(R.string.noti, ip)
+            binding.textView.text = resources.getString(R.string.noti, NetworkUtils.ip)
             binding.button.text = resources.getString(R.string.disable)
         } else {
             binding.textView.text = ""

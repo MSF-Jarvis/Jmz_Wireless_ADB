@@ -5,7 +5,7 @@ import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 
-@TargetApi(Build.VERSION_CODES.N)
+@TargetApi(24)
 class QuickSettingTileService : TileService() {
 
     override fun onStartListening() {
@@ -36,6 +36,14 @@ class QuickSettingTileService : TileService() {
             getString(R.string.disable)
         } else {
             getString(R.string.enable)
+        }
+
+        if (Build.VERSION.SDK_INT >= 29) {
+            subtitle = if (isEnabled) {
+                NetworkUtils.ip
+            } else {
+                ""
+            }
         }
 
         updateTile()
