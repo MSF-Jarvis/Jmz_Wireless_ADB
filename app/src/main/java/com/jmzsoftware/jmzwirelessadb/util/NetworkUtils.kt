@@ -1,7 +1,8 @@
-package com.jmzsoftware.jmzwirelessadb
+package com.jmzsoftware.jmzwirelessadb.util
 
 import android.content.Context
 import android.net.wifi.WifiManager
+import com.jmzsoftware.jmzwirelessadb.ADBApplication
 
 object NetworkUtils {
     private val wifiManager by lazy { ADBApplication.INSTANCE.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager }

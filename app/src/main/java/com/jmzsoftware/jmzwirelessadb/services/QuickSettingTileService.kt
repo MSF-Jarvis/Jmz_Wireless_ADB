@@ -1,9 +1,12 @@
-package com.jmzsoftware.jmzwirelessadb
+package com.jmzsoftware.jmzwirelessadb.services
 
 import android.annotation.TargetApi
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
+import com.jmzsoftware.jmzwirelessadb.R
+import com.jmzsoftware.jmzwirelessadb.util.NetworkUtils
+import com.jmzsoftware.jmzwirelessadb.util.ShellCommands
 
 @TargetApi(24)
 class QuickSettingTileService : TileService() {

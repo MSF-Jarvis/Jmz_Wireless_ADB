@@ -1,4 +1,4 @@
-package com.jmzsoftware.jmzwirelessadb
+package com.jmzsoftware.jmzwirelessadb.util
 
 import eu.chainfire.libsuperuser.Shell
 

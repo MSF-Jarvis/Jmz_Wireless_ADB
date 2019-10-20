@@ -19,13 +19,14 @@
  *
  */
 
-package com.jmzsoftware.jmzwirelessadb
+package com.jmzsoftware.jmzwirelessadb.activities
 
-import android.content.Context
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.jmzsoftware.jmzwirelessadb.R
 import com.jmzsoftware.jmzwirelessadb.databinding.ActivityMainBinding
+import com.jmzsoftware.jmzwirelessadb.util.NetworkUtils
+import com.jmzsoftware.jmzwirelessadb.util.ShellCommands
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
