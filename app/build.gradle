@@ -6,7 +6,7 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.jmzsoftware.jmzwirelessadb"
+        applicationId "msfjarvis.wirelessadb"
         minSdkVersion 15
         targetSdkVersion 29
         versionCode 3
