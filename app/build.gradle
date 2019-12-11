@@ -7,12 +7,11 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "msfjarvis.wirelessadb"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 4
         versionName "4.0"
     }
-    viewBinding.enabled = true
     if (keystorePropertiesFile.exists()) {
         println "Found signature properties file. Build will be signed."
         def keystoreProperties = new Properties()
@@ -28,6 +27,10 @@ android {
         buildTypes.release.signingConfig = signingConfigs.release
     }
     buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix "-debug"
+        }
         release {
             minifyEnabled true
             shrinkResources true
@@ -35,12 +38,26 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    buildFeatures {
+        compose true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }
 
 dependencies {
     implementation "eu.chainfire:libsuperuser:1.1.0.201907261845"
     implementation "androidx.appcompat:appcompat:1.1.0"
     implementation "com.google.android.material:material:1.2.0-alpha02"
+    implementation "androidx.core:core-ktx:1.2.0-rc01"
+    implementation "androidx.ui:ui-layout:0.1.0-dev03"
+    implementation "androidx.ui:ui-material:0.1.0-dev03"
+    implementation "androidx.ui:ui-tooling:0.1.0-dev03"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 repositories {

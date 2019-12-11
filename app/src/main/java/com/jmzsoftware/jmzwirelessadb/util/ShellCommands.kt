@@ -8,11 +8,11 @@ object ShellCommands {
     private const val ADB_PORT = "5555"
 
     fun enableAdb() {
-        runCommands(arrayOf("setprop $ADB_TCP_PORT_SYSTEM_PROP $ADB_PORT", "stop adbd", "start adbd"))
+        runCommands(arrayOf("setprop $ADB_TCP_PORT_SYSTEM_PROP $ADB_PORT"/* , "stop adbd", "start adbd" */))
     }
 
     fun disableAdb() {
-        runCommands(arrayOf("setprop $ADB_TCP_PORT_SYSTEM_PROP 0", "stop adbd"))
+        runCommands(arrayOf("setprop $ADB_TCP_PORT_SYSTEM_PROP 0" /* , "stop adbd" */))
     }
 
     fun isAdbTcpEnabled() = try {

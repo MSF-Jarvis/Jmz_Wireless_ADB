@@ -23,36 +23,61 @@ package com.jmzsoftware.jmzwirelessadb.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.Composable
+import androidx.compose.Model
+import androidx.compose.setViewContent
+import androidx.ui.core.dp
+import androidx.ui.layout.Column
+import androidx.ui.layout.Padding
+import androidx.ui.material.Button
+import androidx.ui.material.ContainedButtonStyle
+import androidx.ui.material.MaterialTheme
+import androidx.ui.text.TextSpan
+import androidx.ui.tooling.preview.Preview
 import com.jmzsoftware.jmzwirelessadb.R
-import com.jmzsoftware.jmzwirelessadb.databinding.ActivityMainBinding
 import com.jmzsoftware.jmzwirelessadb.util.NetworkUtils
 import com.jmzsoftware.jmzwirelessadb.util.ShellCommands
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        updateState()
-        binding.button.setOnClickListener {
-            if (binding.button.text == resources.getString(R.string.disable)) {
-                ShellCommands.disableAdb()
-            } else {
-                ShellCommands.enableAdb()
+        setViewContent {
+            AdbUI {
+                if (State.isEnabled) {
+                    ShellCommands.disableAdb()
+                } else {
+                    ShellCommands.enableAdb()
+                }
+                State.isEnabled = ShellCommands.isAdbTcpEnabled()
             }
-            updateState()
         }
     }
 
-    private fun updateState() {
-        if (ShellCommands.isAdbTcpEnabled()) {
-            binding.textView.text = resources.getString(R.string.noti, NetworkUtils.ip)
-            binding.button.text = resources.getString(R.string.disable)
-        } else {
-            binding.textView.text = ""
-            binding.button.text = resources.getString(R.string.enable)
+    @Composable
+    fun AdbUI(onClick: () -> Unit = {}) {
+        Column {
+            Padding(bottom = 16.dp) {
+                Button(resources.getString(if (State.isEnabled) R.string.disable else R.string.enable), style = ContainedButtonStyle(), onClick = onClick)
+            }
+            TextSpan(text = if (State.isEnabled) resources.getString(R.string.noti, NetworkUtils.ip) else "")
+        }
+    }
+
+    @Model
+    object State {
+        var isEnabled = ShellCommands.isAdbTcpEnabled()
+    }
+}
+
+@Preview
+@Composable
+fun DefaultUI() {
+    MaterialTheme {
+        Column {
+            Padding(bottom = 16.dp) {
+                Button(if (MainActivity.State.isEnabled) "Disable" else "Enable", style = ContainedButtonStyle())
+            }
+            TextSpan(text = if (MainActivity.State.isEnabled) "Run \'adb connect %s:5555\' in terminal" else "")
         }
     }
 }
