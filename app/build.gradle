@@ -40,7 +40,7 @@ android {
 dependencies {
     implementation "eu.chainfire:libsuperuser:1.1.0.201907261845"
     implementation "androidx.appcompat:appcompat:1.1.0"
-    implementation "com.google.android.material:material:1.2.0-alpha02"
+    implementation "com.google.android.material:material:1.2.0-alpha03"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 }
 repositories {
