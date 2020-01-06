@@ -1,15 +1,16 @@
 package com.jmzsoftware.jmzwirelessadb.services
 
-import android.annotation.TargetApi
+import android.content.Context
+import android.net.wifi.WifiManager
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
 import com.jmzsoftware.jmzwirelessadb.R
-import com.jmzsoftware.jmzwirelessadb.util.NetworkUtils
 import com.jmzsoftware.jmzwirelessadb.util.ShellCommands
 
-@TargetApi(24)
 class QuickSettingTileService : TileService() {
+
+    private val wifiManager: WifiManager by lazy { getSystemService(Context.WIFI_SERVICE) as WifiManager }
 
     override fun onStartListening() {
         qsTile.updateStateAndSubtitle()
@@ -43,12 +44,17 @@ class QuickSettingTileService : TileService() {
 
         if (Build.VERSION.SDK_INT >= 29) {
             subtitle = if (isEnabled) {
-                NetworkUtils.ip
+                getIp()
             } else {
                 ""
             }
         }
-
         updateTile()
+    }
+
+    private fun getIp(): String {
+        val ip = wifiManager.connectionInfo.ipAddress
+        return ((ip and 0xFF).toString() + "." + (ip shr 8 and 0xFF) + "." + (ip shr 16 and 0xFF) + "."
+                + (ip shr 24 and 0xFF))
     }
 }
