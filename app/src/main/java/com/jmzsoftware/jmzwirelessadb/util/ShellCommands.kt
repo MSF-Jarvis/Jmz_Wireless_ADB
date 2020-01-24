@@ -7,6 +7,8 @@ object ShellCommands {
     private const val ADB_TCP_PORT_SYSTEM_PROP = "service.adb.tcp.port"
     private const val ADB_PORT = "5555"
 
+    fun isRootAvailable() = Shell.SU.available()
+
     fun enableAdb() {
         runCommands(arrayOf("setprop $ADB_TCP_PORT_SYSTEM_PROP $ADB_PORT", "stop adbd", "start adbd"))
     }

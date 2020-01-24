@@ -5,6 +5,7 @@ import android.net.wifi.WifiManager
 import android.os.Build
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
+import android.widget.Toast
 import com.jmzsoftware.jmzwirelessadb.R
 import com.jmzsoftware.jmzwirelessadb.util.ShellCommands
 
@@ -17,6 +18,10 @@ class QuickSettingTileService : TileService() {
     }
 
     override fun onClick() {
+        if (!ShellCommands.isRootAvailable()) {
+            Toast.makeText(this, getString(R.string.root_not_available), Toast.LENGTH_SHORT).show()
+            return
+        }
         with(qsTile) {
             if (state == Tile.STATE_ACTIVE) {
                 ShellCommands.disableAdb()
