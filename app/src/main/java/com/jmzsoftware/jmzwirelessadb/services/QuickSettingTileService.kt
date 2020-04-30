@@ -42,7 +42,10 @@ class QuickSettingTileService : TileService() {
         }
 
         label = if (isEnabled) {
-            getString(R.string.disable)
+            if (Build.VERSION.SDK_INT >= 29)
+                getString(R.string.disable)
+            else
+                getIp()
         } else {
             getString(R.string.enable)
         }
