@@ -14,7 +14,7 @@ object ShellCommands {
     }
 
     fun disableAdb() {
-        runCommands(arrayOf("setprop $ADB_TCP_PORT_SYSTEM_PROP 0", "stop adbd"))
+        runCommands(arrayOf("setprop $ADB_TCP_PORT_SYSTEM_PROP 0", "stop adbd", "start adbd"))
     }
 
     fun isAdbTcpEnabled() = try {
